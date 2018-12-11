@@ -1,12 +1,20 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Hero } from './hero';
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class InMemoryDataService implements InMemoryDbService {
+  heroes: Observable<any[]>;
+  
+  constructor(db: AngularFirestore) {
+    this.heroes = db.collection('heroes').valueChanges();
+  }
+  
   createDb() {
     const heroes = [
       { id: 11, name: 'Mr. Nice' },
@@ -20,7 +28,7 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 19, name: 'Magma' },
       { id: 20, name: 'Tornado' }
     ];
-    return {heroes};
+    return { heroes };
   }
 
   // Overrides the genId method to ensure that a hero always has an id.
