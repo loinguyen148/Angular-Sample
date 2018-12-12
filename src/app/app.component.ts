@@ -55,9 +55,7 @@ export class AppComponent implements OnInit {
   updateHero(hero: Hero) {
     if (hero) {
       this.heroesCollection.doc(hero.id).update(hero);
-      const currentHero: any = this.heroesCollection.doc(hero.id).ref.get();
-      
-      console.warn(currentHero.__zone_symbol__value.id);
+      this.selectedHero = {} as Hero;
     }
   }
   
