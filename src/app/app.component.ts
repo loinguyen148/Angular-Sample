@@ -21,8 +21,8 @@ export class AppComponent implements OnInit {
   
   ngOnInit(): void {
     this.getHeroes();
-    this.heroes.subscribe(hero => {
-      console.warn(hero);
+    this.heroes.subscribe(heroes => {
+      console.warn(heroes);
     });
   }
   
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     this.heroes = this.db.collection<Hero>('heroes').valueChanges();
   }
   
-  selectHero(hero: Hero) {
+  onSelectHero(hero: Hero) {
     this.selectedHero = hero;
   }
   
@@ -54,7 +54,6 @@ export class AppComponent implements OnInit {
   
   updateHero(hero: Hero) {
     if (hero) {
-      hero.name = 'Updated ' + hero.name;
       this.heroesCollection.doc(hero.id).update(hero);
       const currentHero: any = this.heroesCollection.doc(hero.id).ref.get();
       
@@ -72,5 +71,9 @@ export class AppComponent implements OnInit {
     
     this.selectedHero = {} as Hero;
     }
+  }
+  
+  onChangeHeroName(heroName: string) {
+    this.selectedHero.name = heroName;
   }
 }

@@ -1,19 +1,23 @@
 <h1>{{title}}</h1>
 
+----------------- Cloud Data (Firebase) -----------------
 
-<!-- <div *ngIf="selectedHero">
-  <p>
-    ------------ <strong>Selected Hero</strong> ------------
-  </p>
-  <p>Id: {{selectedHero.id}}</p>
-  <p>Name: {{selectedHero.name}}</p>
-  ------------------------
-</div> -->
 <ul>
-  <li class="text" *ngFor="let hero of heroes | async" (click)="selectHero(hero)" [class.active]="selectedHero == hero">
-    {{hero.id}} --- {{hero.name}}
+  <li class="text" *ngFor="let hero of heroes | async" (click)="onSelectHero(hero)" [class.active]="selectedHero == hero">
+    <span>ID: {{hero.id}} --- </span>
+    
+    <span *ngIf="selectedHero == hero">
+      <input #selectedHeroName (input)="onChangeHeroName(selectedHeroName.value)" [(ngModel)]="selectedHero.name"/>
+    </span>
+    <span *ngIf="selectedHero != hero">
+      {{hero.name}}
+    </span>
   </li>
 </ul>
+
+<button (click)="updateHero(selectedHero)">Update Hero</button>
+<button (click)="deleteHero(selectedHero)">Delete Hero</button>
+<br/> <br/>
 
 <div>
   <label>Hero name:
@@ -24,11 +28,9 @@
   <button (click)="addHero(heroName.value); heroName.value=''">
     Add Hero
   </button>
-  <button (click)="updateHero(selectedHero)">Update Hero</button>
-  <button (click)="deleteHero(selectedHero)">Delete Hero</button>
 </div>
 
-------------
+----------------- Mock Data -----------------
 
 <nav>
   <a routerLink="/dashboard"> Dashboard </a>
