@@ -1,9 +1,16 @@
 <h1>{{title}}</h1>
 
-------------
-{{selectedHero.name}}
+
+<!-- <div *ngIf="selectedHero">
+  <p>
+    ------------ <strong>Selected Hero</strong> ------------
+  </p>
+  <p>Id: {{selectedHero.id}}</p>
+  <p>Name: {{selectedHero.name}}</p>
+  ------------------------
+</div> -->
 <ul>
-  <li class="text" *ngFor="let hero of heroes | async" (click)="selectHero(hero)">
+  <li class="text" *ngFor="let hero of heroes | async" (click)="selectHero(hero)" [class.active]="selectedHero == hero">
     {{hero.id}} --- {{hero.name}}
   </li>
 </ul>
@@ -15,9 +22,10 @@
   <!-- (click) passes input value to add() and then clears the input -->
   
   <button (click)="addHero(heroName.value); heroName.value=''">
-    Add
+    Add Hero
   </button>
-  <button (click)="updateHero({name: '123'})">Update</button>
+  <button (click)="updateHero(selectedHero)">Update Hero</button>
+  <button (click)="deleteHero(selectedHero)">Delete Hero</button>
 </div>
 
 ------------
