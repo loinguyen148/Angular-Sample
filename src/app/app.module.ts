@@ -27,7 +27,9 @@ import {
   MatCheckboxModule,
   MatFormFieldModule,
   MatInputModule,
-  MatRippleModule 
+  MatRippleModule,
+  MatListModule,
+  MatIconModule
 } from '@angular/material';
 
 @NgModule({
@@ -55,7 +57,9 @@ import {
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
-    MatRippleModule
+    MatRippleModule,
+    MatListModule,
+    MatIconModule
   ],
   
   declarations: [

@@ -21,9 +21,9 @@ export class AppComponent implements OnInit {
   
   ngOnInit(): void {
     this.getHeroes();
-    this.heroes.subscribe(heroes => {
+    /* this.heroes.subscribe(heroes => {
       console.warn(heroes);
-    });
+    }); */
   }
   
   getHeroes(): void {
