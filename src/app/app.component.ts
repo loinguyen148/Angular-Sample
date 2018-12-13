@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-
-export interface Hero { id: string, name: string; }
+import { Hero } from './hero';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +13,7 @@ export class AppComponent implements OnInit {
   heroes: Observable<Hero[]>;
   selectedHero: Hero;
   private heroesCollection: AngularFirestoreCollection<Hero>;
+  myHeroes: Hero[];
   
   constructor(private db: AngularFirestore) {
     
@@ -24,11 +24,63 @@ export class AppComponent implements OnInit {
     /* this.heroes.subscribe(heroes => {
       console.warn(heroes);
     }); */
+    
+    // this.coldObservable();
+    // this.hotObservable();
+  }
+  
+  private x = 5;
+  
+  coldObservable():void {
+    const observable = Observable.create(observer => {
+      let x = 5;
+      observer.next(x);
+      x += 10;
+      
+      setTimeout(() => {
+        observer.next(x);
+        observer.complete();
+      }, 1000);
+    });
+    
+    const observer = {
+      next: value => console.warn(value),
+      complete: () => console.warn('done')
+    };
+    
+    observable.subscribe(observer);
+    
+    setTimeout(() => {
+      observable.subscribe(observer);
+    }, 1000);
+  }
+  
+  hotObservable():void {
+    const observable = Observable.create(observer => {
+      observer.next(this.x);
+      this.x += 10;
+      
+      setTimeout(() => {
+        observer.next(this.x);
+        observer.complete();
+      }, 1000);
+    });
+    
+    const observer = {
+      next: value => console.warn(value),
+      complete: () => console.warn('done')
+    };
+    
+    observable.subscribe(observer);
+    
+    setTimeout(() => {
+      observable.subscribe(observer);
+    }, 1000);
   }
   
   getHeroes(): void {
     this.heroesCollection = this.db.collection<Hero>('heroes');
-    this.heroes = this.db.collection<Hero>('heroes').valueChanges();
+    this.heroes = this.heroesCollection.valueChanges();
   }
   
   onSelectHero(hero: Hero) {

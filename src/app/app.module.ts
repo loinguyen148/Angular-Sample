@@ -29,7 +29,8 @@ import {
   MatInputModule,
   MatRippleModule,
   MatListModule,
-  MatIconModule
+  MatIconModule,
+  MatCardModule
 } from '@angular/material';
 
 @NgModule({
@@ -59,7 +60,8 @@ import {
     MatInputModule,
     MatRippleModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule
   ],
   
   declarations: [
