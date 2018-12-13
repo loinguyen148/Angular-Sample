@@ -1,47 +1,68 @@
+<div>
+  <div fxFlex="40" class="sec1">
+      <ngx-auth-firebaseui></ngx-auth-firebaseui>
+  </div>
+  <div fxFlex="40" class="sec2" >
+      <ngx-auth-firebaseui-user></ngx-auth-firebaseui-user>
+  </div>
+  <div fxFlex="20" class="sec3">
+      <ngx-auth-firebaseui-providers layout="column"></ngx-auth-firebaseui-providers>
+  </div>
+</div>
+
+<br/><br/><br/><br/><br/>
 <h1>{{title}}</h1>
 
-<h3>----------------- Cloud Data (Firebase) -----------------</h3>
+<div>
+    <div fxFlex="50" class="sec3">
+      <h3>----------------- Cloud Data (Firebase) -----------------</h3>
 
-<mat-card>
-  <mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let hero of heroes | async" (click)="onSelectHero(hero)">
-      <mat-icon matListIcon>drag_indicator</mat-icon>
-      <!-- <h3 matLine>ID: {{hero.id}} </h3> -->
-      <p matLine>
-        <span *ngIf="selectedHero == hero">
+      <mat-card>
+        <mat-list role="list">
+          <mat-list-item role="listitem" *ngFor="let hero of heroes | async" (click)="onSelectHero(hero)">
+            <mat-icon matListIcon>drag_indicator</mat-icon>
+            <!-- <h3 matLine>ID: {{hero.id}} </h3> -->
+            <p matLine>
+              <span *ngIf="selectedHero == hero">
+                <mat-form-field>
+                  <input matInput #selectedHeroName placeholder="Name" [(ngModel)]="selectedHero.name" (input)="onChangeHeroName(selectedHeroName.value)">
+                </mat-form-field> &nbsp;
+                <button mat-raised-button (click)="updateHero(selectedHero)">Update </button> &nbsp;
+                <button mat-raised-button color="warn" (click)="deleteHero(selectedHero)"> Delete </button>
+              </span>
+              <span *ngIf="selectedHero != hero">
+                {{hero.name}}
+              </span>
+            </p>
+          </mat-list-item>
+        </mat-list>
+        
+        <form>
           <mat-form-field>
-            <input matInput #selectedHeroName placeholder="Name" [(ngModel)]="selectedHero.name" (input)="onChangeHeroName(selectedHeroName.value)">
-          </mat-form-field> &nbsp;
-          <button mat-raised-button (click)="updateHero(selectedHero)">Update </button> &nbsp;
-          <button mat-raised-button color="warn" (click)="deleteHero(selectedHero)"> Delete </button>
-        </span>
-        <span *ngIf="selectedHero != hero">
-          {{hero.name}}
-        </span>
-      </p>
-    </mat-list-item>
-  </mat-list>
-  
-  <form>
-    <mat-form-field>
-      <input matInput #heroName placeholder="Hero Name">
-    </mat-form-field>
-    &nbsp;
-    <button mat-raised-button color="primary" (click)="addHero(heroName.value); heroName.value=''">
-      Add Hero
-    </button>
-  </form>
-</mat-card>
+            <input matInput #heroName placeholder="Hero Name">
+          </mat-form-field>
+          &nbsp;
+          <button mat-raised-button color="primary" (click)="addHero(heroName.value); heroName.value=''">
+            Add Hero
+          </button>
+        </form>
+      </mat-card>
+    </div>
+    
+    <div fxFlex="50" class="sec4">
+      <mat-divider></mat-divider>
+      <mat-card>
+        <h3>----------------- Mock Data -----------------</h3>
 
-<mat-divider></mat-divider>
-<mat-card>
-  <h3>----------------- Mock Data -----------------</h3>
+        <nav>
+          <a routerLink="/dashboard"> Dashboard </a>
+          <a routerLink="/heroes"> Heroes </a>
+        </nav>
+        
+        <router-outlet></router-outlet>
+        
+        <app-messages></app-messages>
+      </mat-card>
+    </div>
+</div>
 
-  <nav>
-    <a routerLink="/dashboard"> Dashboard </a>
-    <a routerLink="/heroes"> Heroes </a>
-  </nav>
-  
-  <app-messages></app-messages>
-  <router-outlet></router-outlet>
-</mat-card>

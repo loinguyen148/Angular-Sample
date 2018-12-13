@@ -22,6 +22,10 @@ import { HeroSearchComponent }  from './hero-search/hero-search.component';
 import { MessagesComponent }    from './messages/messages.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+
 import { 
   MatButtonModule, 
   MatCheckboxModule,
@@ -50,9 +54,9 @@ import {
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
+      InMemoryDataService, { dataEncapsulation: false, delay: 0 }
     ),
-
+    
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -61,7 +65,18 @@ import {
     MatRippleModule,
     MatListModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    
+    FlexLayoutModule,
+    
+    NgxAuthFirebaseUIModule.forRoot({
+      apiKey: 'AIzaSyBtZGuREtE3YJJE-4kmRKWR2z-fN8yq4rs',
+      authDomain: 'sample-97a55.firebaseapp.com',
+      databaseURL: 'https://sample-97a55.firebaseio.com',
+      projectId: 'sample-97a55',
+      storageBucket: 'sample-97a55.appspot.com',
+      messagingSenderId: '113634295072'
+    })
   ],
   
   declarations: [
