@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Hero } from './hero';
+
+export interface Hero {
+  id: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-root',
@@ -14,6 +18,7 @@ export class AppComponent implements OnInit {
   selectedHero: Hero;
   private heroesCollection: AngularFirestoreCollection<Hero>;
   myHeroes: Hero[];
+  private x = 5;
   
   constructor(private db: AngularFirestore) {
     
@@ -29,7 +34,6 @@ export class AppComponent implements OnInit {
     // this.hotObservable();
   }
   
-  private x = 5;
   
   coldObservable():void {
     const observable = Observable.create(observer => {
