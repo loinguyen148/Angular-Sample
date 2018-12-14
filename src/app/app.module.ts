@@ -26,6 +26,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
+import { SimpleService } from '../app/simple.service';
+
 import { 
   MatButtonModule, 
   MatCheckboxModule,
@@ -34,13 +38,15 @@ import {
   MatRippleModule,
   MatListModule,
   MatIconModule,
-  MatCardModule
+  MatExpansionModule,
+  MatCardModule,
 } from '@angular/material';
+import { ChildComponent } from './child/child.component';
+import { ParentComponent } from './parent/parent.component';
 
 @NgModule({
   imports: [
     BrowserModule,
-    
     AngularFireModule.initializeApp(environment.firebase, 'sample-app'), // imports firebase/app needed for everything
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
@@ -66,6 +72,9 @@ import {
     MatListModule,
     MatIconModule,
     MatCardModule,
+    MatExpansionModule,
+    
+    DragDropModule,
     
     FlexLayoutModule,
     
@@ -85,10 +94,12 @@ import {
     HeroesComponent,
     HeroDetailComponent,
     MessagesComponent,
-    HeroSearchComponent
+    HeroSearchComponent,
+    ChildComponent,
+    ParentComponent,
   ],
   
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
 })
 
 export class AppModule { }

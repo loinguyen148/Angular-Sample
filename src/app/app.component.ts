@@ -1,27 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked, DoCheck } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 export interface Hero {
   id: string;
   name: string;
 }
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
   title = 'Tour of Heroes';
-  heroes: Observable<Hero[]>;
+  heroDetails: Object = {};
   selectedHero: Hero;
   private heroesCollection: AngularFirestoreCollection<Hero>;
   myHeroes: Hero[];
   private x = 5;
   
   constructor(private db: AngularFirestore) {
-    
   }
   
   ngOnInit(): void {
@@ -33,7 +32,6 @@ export class AppComponent implements OnInit {
     // this.coldObservable();
     // this.hotObservable();
   }
-  
   
   coldObservable():void {
     const observable = Observable.create(observer => {
@@ -84,11 +82,27 @@ export class AppComponent implements OnInit {
   
   getHeroes(): void {
     this.heroesCollection = this.db.collection<Hero>('heroes');
-    this.heroes = this.heroesCollection.valueChanges();
+    this.heroesCollection.valueChanges().subscribe(heroes => {
+      this.myHeroes = heroes;
+    })
+  }
+  
+  getHero(heroId: string): void {
+    this.heroesCollection.doc(heroId).ref.get().then((doc) => {
+      if (doc.exists) {
+        this.heroDetails = doc.data();
+        console.log("Document data:", doc.data());
+      } else {
+        console.log("No such document!");
+      }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
   }
   
   onSelectHero(hero: Hero) {
     this.selectedHero = hero;
+    this.getHero(this.selectedHero.id);
   }
   
   addHero(heroName: string) {
@@ -129,5 +143,9 @@ export class AppComponent implements OnInit {
   
   onChangeHeroName(heroName: string) {
     this.selectedHero.name = heroName;
+  }
+  
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.myHeroes, event.previousIndex, event.currentIndex);
   }
 }
